@@ -1,0 +1,11 @@
+.navbar {
+    background-color: #aa81f7;
+    color: #fff;
+    padding: 1rem 2rem;
+  }
+  .navbar-brand {
+    flex: 0 0 auto; 
+    margin: 0 auto; 
+    font-size: 2rem;
+    font-style:oblique;
+  }
