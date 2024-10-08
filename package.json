@@ -1,0 +1,14 @@
+{
+  "name": "node-server",
+  "version": "1.0.0",
+  "description": "Студенческий проект для пересдачи долга по проектному практикуму УрФУ хыть хыть",
+  "main": "app.js",
+  "scripts": {
+    "test": "console.log('Hello world!')"
+  },
+  "author": "uzbagoitel777",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.1"
+  }
+}

@@ -1,0 +1,42 @@
+.navbar {
+    background-color: #aa81f7;
+    color: #fff;
+    padding: 1rem 2rem;
+  }
+  .navbar-brand {
+    flex: 0 0 auto; 
+    margin: 0 auto; 
+    font-size: 2rem;
+    font-style:oblique;
+  }
+  .sidebar {
+    position: fixed;
+    top: 80px; 
+    left: 0;
+    width: 200px; 
+    height: calc(100vh - 80px); 
+    background-color: #f0f0f0; 
+    padding: 20px;
+    border-right: 1px solid #ddd;
+  }
+  
+  .btn-rounded {
+    border-radius: 20px; 
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    background-color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .btn-rounded:hover {
+    background-color: #f0f0f0;
+    color: #666;
+  }
+  
+  .btn-rounded span {
+    margin-right: 10px;
+  }
