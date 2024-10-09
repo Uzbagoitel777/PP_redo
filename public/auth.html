@@ -40,22 +40,13 @@
 
     <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
         <div class="card mx-auto" style="width: 30rem;">
-            <div class="card-body">
-                <h2 class="card-title">Sign In</h2>
-                <form id="sign-in-form">
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" placeholder="Enter email">
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" placeholder="Enter password">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Sign In</button>
-                </form>
+            <div class="card-body py-5">
+                <h2 class="card-title text-center mb-5">You're not signed in</h2>
+                <div class="d-flex justify-content-between mb-2">
+                    <a href="/sign_in.html" class="btn btn-primary btn-lg mx-5">Sign In</a>
+                    <button type="button" class="btn btn-secondary btn-lg mx-5">Sign Up</button>
             </div>
         </div>
     </div>
-    <script src="validate_creds.js"></script>
 </body>
 </html>
