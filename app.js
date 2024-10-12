@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 const sqlite3 = require('sqlite3')
+const bcrypt = require('bcrypt');
+const saltRounds = 11;
 
 const port = 3000;
 
@@ -24,25 +26,31 @@ app.use((req, res, next) => {
 
 function validateCreds(email, password, callback) {
   const query = "SELECT password FROM students WHERE email = ? COLLATE NOCASE;";
-  db.all(query, [email], (err, rows) => {
+  db.get(query, [email], (err, row) => {
       //console.log(`Query: ${query}`);
       //console.log(`Query parameters: ${JSON.stringify([email])}`);
       //console.log(`Query result: ${JSON.stringify(rows)}`);
       if (err) {
           console.error(`Error: ${err}`);
           callback(false, err);
-      } else if (rows.length === 0) {
+      } else if (!row) {
           console.log(`Email not found: ${email}`);
           callback(false, "Email not found");
       } else {
-          console.log(`Password: ${rows[0].password}`);
-          if (rows[0].password === password) {
+        bcrypt.compare(password, row.password, (err, result) =>{
+          if (err) {
+            console.error(err);
+            callback(false, err);
+          }
+          console.log(`Password: ${row.password}`);
+          if (result) {
               console.log(`Login successful!`);
               callback(true, null);
           } else {
               console.log(`Incorrect password`);
               callback(false, "Incorrect password");
           }
+        });
       }
   });
 }
@@ -81,17 +89,24 @@ app.post('/api/register', (req, res) => {
       return res.status(409).json({success: false, error: 'Email already exists'});
     }
 
-    const insertQuery = `
-      INSERT INTO students (email, password, firstName,  surname, paternalName, year)
-      VALUES (?, ?, ?, ?, ?, ?)
-    `;
-    db.run(insertQuery, [email, password, firstName, surname, paternalName, academicYear], function(err){
+    bcrypt.hash(password, saltRounds, (err, hash) => {
       if (err) {
-        console.log(err)
-        return res.status(500).json({success: false, error: 'Database error'});
+          console.error(err);
+          return res.status(500).json({ success: false, error: 'Password hashing failed' });
       }
-      res.json({success: true, message: 'User registred successfully'});
-    });
+
+      const insertQuery = `
+          INSERT INTO students (email, password, firstName, surname, paternalName, year) 
+          VALUES (?, ?, ?, ?, ?, ?)
+      `;
+      db.run(insertQuery, [email, hash, firstName, surname, paternalName, academicYear], function(err) {
+          if (err) {
+              console.error(err);
+              return res.status(500).json({ success: false, error: 'Database error' });
+          }
+          res.json({ success: true, message: 'Registration successful' });
+      });
+  });
   });
 });
 
