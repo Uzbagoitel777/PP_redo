@@ -4,7 +4,7 @@ const sqlite3 = require('sqlite3')
 
 const port = 3000;
 
-// MAKE SURE YOU CONNECT TO THE RIGHT DATABASE WHEN USING SQLITE3 TERMINAL
+// MAKE SURE YOU CONNECT TO THE RIGHT DATABASE WHEN USING THE SQLITE3 TERMINAL
 let db = new sqlite3.Database("mydatabase.db",  (err) => {
   if(err){
     console.log('Error Occured - ' + err.message)
@@ -62,6 +62,36 @@ app.post('/api/login', (req, res) => {
       res.status(401).json({ authorized: false, error: error });
       //console.log('validateCreds returned false')
     }
+  });
+});
+
+app.post('/api/register', (req, res) => {
+  const {email, password, firstName, surname, paternalName, academicYear} = req.body;
+  if (!email || !password || !firstName){
+    return res.status(400).json({success: false, error: 'Missing required fields'});
+  }
+
+  const checkEmailQuery = "SELECT email FROM students WHERE email = ?";
+  db.get(checkEmailQuery, [email], (err, row) =>{
+    if (err) {
+        console.log(err);
+        return res.status(500).json({success: false,  error: 'Database error'});
+    }
+    if (row){
+      return res.status(409).json({success: false, error: 'Email already exists'});
+    }
+
+    const insertQuery = `
+      INSERT INTO students (email, password, firstName,  surname, paternalName, year)
+      VALUES (?, ?, ?, ?, ?, ?)
+    `;
+    db.run(insertQuery, [email, password, firstName, surname, paternalName, academicYear], function(err){
+      if (err) {
+        console.log(err)
+        return res.status(500).json({success: false, error: 'Database error'});
+      }
+      res.json({success: true, message: 'User registred successfully'});
+    });
   });
 });
 

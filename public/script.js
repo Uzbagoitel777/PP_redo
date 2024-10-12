@@ -8,8 +8,9 @@
 //    .catch(error => {
 //      console.error('Error checking authorization:', error);
 //    });
+const unprotectedUrls = ['/sign_in.html', '/register.html', '/auth.html']
 document.addEventListener('DOMContentLoaded', function() {
-  if (window.location.pathname === '/sign_in.html' || window.location.pathname === '/auth.html') {
+  if (unprotectedUrls.includes(window.location.pathname)) {
     return;
   }
   if (localStorage.getItem('authorized') !== 'true') {
