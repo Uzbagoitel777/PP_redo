@@ -1,20 +1,31 @@
-const authorized = false;
-const adminEmail = 'admin@mail.ru'
-const adminPass = '4123'
+document.getElementById('sign-in-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('email').value.trim().toLowerCase();
+  const password = document.getElementById('password').value;
 
-document.getElementById('sign-in-form').addEventListener('submit', (e) => {
-    e.preventDefault();
+  try {
+      const response = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email, password }),
+      });
 
-    const email = document.getElementById('email').value; 
-    const password = document.getElementById('password').value;
-
-    if (email === adminEmail && password === adminPass) {
-        localStorage.setItem('authorized', 'true');
-        console.log('Authorized!');
-        window.location.href = '/';
-      } else {
-        console.log(email);
-        console.log(password);
-        console.log('Invalid credentials');
+      if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
       }
+
+      const result = await response.json();
+
+      if (result.authorized) {
+          console.log('Login successful!');
+          localStorage.setItem('authorized', 'true')
+          window.location.href = '/';
+      } else {
+          console.log('Login failed:', result.error);
+      }
+  } catch (error) {
+      console.error('Error:', error);
+  }
 });
