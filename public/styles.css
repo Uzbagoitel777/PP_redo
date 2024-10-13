@@ -40,3 +40,40 @@
   .btn-rounded span {
     margin-right: 10px;
   }
+
+  .offer-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.offer-text {
+    flex-grow: 1;
+}
+
+.offer-title {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.offer-brief {
+    font-size: 0.9em;
+    opacity: 0.7;
+}
+
+.offer-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+#offers-container {
+  margin-top: 100px; 
+  width: calc(50% - 100px);
+  margin-left: 200px;
+}

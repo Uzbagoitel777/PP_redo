@@ -110,6 +110,17 @@ app.post('/api/register', (req, res) => {
   });
 });
 
+app.get('/api/offers', (req, res) => {
+  const query = "SELECT title, brief FROM offers";
+  db.all(query, [], (err, rows) => {
+      if (err) {
+          console.error(err);
+          return res.status(500).json({ success: false, error: 'Database error' });
+      }
+      res.json({ success: true, offers: rows });
+  });
+});
+
 app.listen(port, () => {
   console.log(`Server started on port ${port}`);
 });
