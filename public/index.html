@@ -51,11 +51,20 @@
           <span class="fas fa-paper-plane" aria-hidden="true"></span> Applied
         </button>
       </div>
-
-      <div id="offers-container" class="container">
-        <!-- Offers are loaded from the database and rendered by a script -->
-        <!-- See load_offers.js-->
-      </div>
+      <div class="container-fluid">
+        <div class="row">
+            <div id="offers-container" class="col-md-6">
+              <!-- Offers are loaded from the database and rendered by a script -->
+              <!-- See load_offers.js -->
+            </div>
+            <div id="offer-details-container" class="col-md-6 position-relative d-none">
+              <h2 class="card-title" id="offer-title"></h2>
+              <p class="card-text" id="offer-description"></p>
+              <button class="btn btn-primary" id="apply-button">Apply</button>
+              <!-- See load_offers.js -->
+            </div>
+        </div>
+    </div>
     <script src = "logout.js"></script>
     <script src = "load_offers.js"></script>
 </body>

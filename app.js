@@ -111,13 +111,28 @@ app.post('/api/register', (req, res) => {
 });
 
 app.get('/api/offers', (req, res) => {
-  const query = "SELECT title, brief FROM offers";
+  const query = "SELECT * FROM offers";
   db.all(query, [], (err, rows) => {
       if (err) {
           console.error(err);
           return res.status(500).json({ success: false, error: 'Database error' });
       }
       res.json({ success: true, offers: rows });
+  });
+});
+
+app.get('/api/offers/:id', (req, res) => {
+  const id = req.params.id;
+  const query = "SELECT * FROM offers WHERE id = ?";
+  db.get(query, [id], (err, row) => {
+      if (err) {
+          console.error(err);
+          return res.status(500).json({ success: false, error: 'Database error' });
+      }
+      if (!row) {
+          return res.status(404).json({ success: false, error: 'Offer not found' });
+      }
+      res.json({ success: true, offer: row });
   });
 });
 

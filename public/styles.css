@@ -77,3 +77,19 @@
   width: calc(50% - 100px);
   margin-left: 200px;
 }
+
+#offer-details-container {
+  top: 100px;
+  right: 0px;
+  width: calc(50% - 100px);
+  height: 100vh;
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #ddd;
+}
+
+.offer-salary {
+  font-weight: bold; 
+  color: #319712; 
+  font-size: 1.2em; 
+}
