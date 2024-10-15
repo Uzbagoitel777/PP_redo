@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html>
 <head>
     <title>Stageровка</title>
     <!--Инициализация Bootstrap-->
@@ -14,7 +13,7 @@
     <link href="styles.css" rel="stylesheet">
     <script src="script.js" defer></script>
 </head>
-<body class="home-page">
+<body>
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container-fluid">
           <div class="mx-auto text-center">
@@ -40,32 +39,5 @@
         </div>
       </nav>
 
-      <div class="sidebar fixed-top">
-        <button class="btn btn-rounded">
-          <span class="fas fa-search" aria-hidden="true"></span> Browse
-        </button>
-        <button class="btn btn-rounded">
-          <span class="fas fa-heart" aria-hidden="true"></span> Favourite
-        </button>
-        <button class="btn btn-rounded">
-          <span class="fas fa-paper-plane" aria-hidden="true"></span> Applied
-        </button>
-      </div>
-      <div class="container-fluid">
-        <div class="row">
-            <div id="offers-container" class="col-md-6">
-              <!-- Offers are loaded from the database and rendered by a script -->
-              <!-- See load_offers.js -->
-            </div>
-            <div id="offer-details-container" class="col-md-6 position-relative d-none">
-              <h2 class="card-title" id="offer-title"></h2>
-              <p class="card-text" id="offer-description"></p>
-              <button class="btn btn-primary" id="apply-button">Apply</button>
-              <!-- See load_offers.js -->
-            </div>
-        </div>
-    </div>
-    <script src = "logout.js"></script>
-    <script src = "load_offers.js" type="module"></script>
 </body>
-</html> 
+</html>

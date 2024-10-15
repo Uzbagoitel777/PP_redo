@@ -29,6 +29,7 @@ export function renderOfferDetails(offer) {
     const imageElement = document.createElement('img');
     imageElement.src = 'placeholder.png';
     imageElement.alt = 'Offer image';
+    imageElement.className = 'img-fluid';
     elements.push(imageElement);
 
     const salaryElement = document.createElement('p');
@@ -49,12 +50,12 @@ export function renderOfferDetails(offer) {
     textElement.textContent = offer.desc;
     elements.push(textElement);
 
-    if(document.URL === 'http://localhost:3000/'){
+    if(window.location.href === 'http://localhost:3000/'){
         const applyButton = document.createElement('button');
         applyButton.textContent = 'Send application';
         applyButton.className = 'btn btn-primary';
         applyButton.addEventListener('click', () => {
-            window.location.href = `/submit_application.html?offerId=${offer.ID}`;
+        window.location.href = `/submit_application.html?offerId=${offer.ID}`;
         });    
         elements.push(applyButton);
     }

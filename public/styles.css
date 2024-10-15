@@ -81,8 +81,8 @@
 #offer-details-container {
   top: 100px;
   right: 0px;
-  width: calc(50% - 100px);
-  height: 100vh;
+  width: calc(50% - 200px);
+  height: 90%;
   background-color: #fff;
   padding: 20px;
   border: 1px solid #ddd;
@@ -92,4 +92,26 @@
   font-weight: bold; 
   color: #319712; 
   font-size: 1.2em; 
+}
+
+#application-form .form-control {
+    border: none;
+    box-shadow: none;
+    padding: 10px 0;
+}
+
+#application-form #topic {
+    font-size: 1.2em;
+    font-weight: bold;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+#application-form #applicationText {
+    min-height: 300px;
+    resize: vertical;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
 }

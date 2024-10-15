@@ -15,6 +15,13 @@ let db = new sqlite3.Database("mydatabase.db",  (err) => {
     console.log('Database connected')
   }
 });
+db.run('PRAGMA foreign_keys = ON;', (err) => {
+  if(err){
+    console.log(err)
+  } else{
+    console.log('Foreign keys enabled')
+  }
+});
 
 app.use(express.json());
 app.use(express.static('public'));
@@ -25,11 +32,8 @@ app.use((req, res, next) => {
 });
 
 function validateCreds(email, password, callback) {
-  const query = "SELECT password FROM students WHERE email = ? COLLATE NOCASE;";
+  const query = "SELECT password, studentId FROM students WHERE email = ? COLLATE NOCASE;";
   db.get(query, [email], (err, row) => {
-      //console.log(`Query: ${query}`);
-      //console.log(`Query parameters: ${JSON.stringify([email])}`);
-      //console.log(`Query result: ${JSON.stringify(rows)}`);
       if (err) {
           console.error(`Error: ${err}`);
           callback(false, err);
@@ -44,8 +48,8 @@ function validateCreds(email, password, callback) {
           }
           console.log(`Password: ${row.password}`);
           if (result) {
-              console.log(`Login successful!`);
-              callback(true, null);
+              console.log(`Login successful! StudentId: ${row.studentId}`);
+              callback(true, null, row.studentId);
           } else {
               console.log(`Incorrect password`);
               callback(false, "Incorrect password");
@@ -62,13 +66,11 @@ app.get('/api/test', (req, res) => {
 app.post('/api/login', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
-  validateCreds(email, password, (authorized, error) => {
+  validateCreds(email, password, (authorized, error, studentId) => {
     if (authorized) {
-      res.json({ authorized: true });
-      //console.log('authorized set to true')
+      res.json({ authorized: true, studentId: studentId });
     } else {
       res.status(401).json({ authorized: false, error: error });
-      //console.log('validateCreds returned false')
     }
   });
 });
@@ -107,6 +109,27 @@ app.post('/api/register', (req, res) => {
           res.json({ success: true, message: 'Registration successful' });
       });
   });
+  });
+});
+
+app.post('/api/submit-application', (req, res) => {
+  const { userId, offerId, topic, applicationText } = req.body;
+  
+  if (!userId || !offerId || !applicationText) {
+      return res.status(400).json({ success: false, error: 'Missing required fields' });
+  }
+
+  const query = `
+      INSERT INTO applications (studentID, offerID, topic, applicationText)
+      VALUES (?, ?, ?, ?)
+  `;
+
+  db.run(query, [userId, offerId, topic, applicationText], function(err) {
+      if (err) {
+          console.error(err);
+          return res.status(500).json({ success: false, error: 'Database error' });
+      }
+      res.json({ success: true, message: 'Application submitted successfully' });
   });
 });
 

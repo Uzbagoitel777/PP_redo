@@ -21,6 +21,7 @@ document.getElementById('sign-in-form').addEventListener('submit', async (e) => 
       if (result.authorized) {
           console.log('Login successful!');
           localStorage.setItem('authorized', 'true')
+          localStorage.setItem('userId', result.studentId);
           window.location.href = '/';
       } else {
           console.log('Login failed:', result.error);
