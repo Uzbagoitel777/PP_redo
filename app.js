@@ -159,6 +159,21 @@ app.get('/api/offers/:id', (req, res) => {
   });
 });
 
+app.get('/api/applications/:id', (req, res) => {
+  const id = req.params.id;
+  const appsQuery = "SELECT applications.* FROM applications, students WHERE students.studentId = ?";
+  db.all(appsQuery, [id], (err, rows) => {
+      if (err) {
+          console.error(err);
+          return res.status(500).json({ success: false, error: 'Database error' });
+      }
+      if (!rows) {
+          return res.status(404).json({ success: false, error: 'Application not found' });
+      }
+      res.json({ success: true, applications: rows});
+  });
+});
+
 app.listen(port, () => {
   console.log(`Server started on port ${port}`);
 });
