@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
 async function submitApplication(event) {
     event.preventDefault();
     
-    const userId = localStorage.getItem('userId');
+    const userId = +localStorage.getItem('userId');
     if (!userId) {
         alert('Please log in to submit an application.');
         return;

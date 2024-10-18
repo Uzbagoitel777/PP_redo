@@ -158,10 +158,9 @@ app.get('/api/offers/:id', (req, res) => {
       res.json({ success: true, offer: row });
   });
 });
-
 app.get('/api/applications/:id', (req, res) => {
-  const id = req.params.id;
-  const appsQuery = "SELECT applications.* FROM applications, students WHERE students.studentId = ?";
+  const id = +req.params.id;
+  const appsQuery = "SELECT * FROM applications WHERE studentID = ?";
   db.all(appsQuery, [id], (err, rows) => {
       if (err) {
           console.error(err);
