@@ -10,7 +10,7 @@ async function fetchApplications(id) {
         if (data.success) {
             let offers = [];
             await data.applications.forEach(async (application, idx, array) => {
-                const offResponse = await fetch(`/api/offers/${application.offerID}`);
+                const offResponse = await fetch(`/api/offers/${+application.offerID}`);
                 const offData = await offResponse.json();
                 if (offData.success){
                     offers.push(offData.offer)
@@ -45,7 +45,7 @@ function renderApplications(applications, offers) {
                 <div class="offer-title">${offers[i].title}</div>
                 <div class="offer-brief">${applications[i].topic}</div>
             </div>
-            <img src="placeholder.png" alt="Offer image" class="offer-image">
+            <img src="${offers[i].path}" alt="Offer image" class="offer-image">
         `;
         console.log(applicationElement.innerHTML)
         container.appendChild(applicationElement);

@@ -134,7 +134,10 @@ app.post('/api/submit-application', (req, res) => {
 });
 
 app.get('/api/offers', (req, res) => {
-  const query = "SELECT * FROM offers";
+  //const query = "SELECT * FROM offers";
+  const query = `SELECT offers.*, media.path FROM offermedia 
+  INNER JOIN offers ON offers.ID = offermedia.offerID 
+  INNER JOIN media ON media.mediaID = offermedia.mediaID;`
   db.all(query, [], (err, rows) => {
       if (err) {
           console.error(err);
@@ -146,7 +149,11 @@ app.get('/api/offers', (req, res) => {
 
 app.get('/api/offers/:id', (req, res) => {
   const id = req.params.id;
-  const query = "SELECT * FROM offers WHERE id = ?";
+  //const query = "SELECT * FROM offers WHERE id = ?";
+  const query = `SELECT offers.*, media.path FROM offermedia 
+  INNER JOIN offers ON offers.ID = offermedia.offerID 
+  INNER JOIN media ON media.mediaID = offermedia.mediaID
+  WHERE offers.ID = ?`
   db.get(query, [id], (err, row) => {
       if (err) {
           console.error(err);

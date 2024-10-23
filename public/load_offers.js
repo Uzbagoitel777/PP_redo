@@ -28,7 +28,7 @@ function renderOffers(offers) {
                 <div class="offer-title">${offer.title}</div>
                 <div class="offer-brief">${offer.brief}</div>
             </div>
-            <img src="placeholder.png" alt="Offer image" class="offer-image">
+            <img src="${offer.path}" alt="Offer image" class="offer-image">
         `;
         offerElement.addEventListener('click', () => {
             fetchOfferDetails(offer.ID);

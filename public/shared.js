@@ -27,7 +27,7 @@ export function renderOfferDetails(offer) {
     elements.push(briefElement);
 
     const imageElement = document.createElement('img');
-    imageElement.src = 'placeholder.png';
+    imageElement.src = `${offer.path}`;
     imageElement.alt = 'Offer image';
     imageElement.className = 'img-fluid';
     elements.push(imageElement);

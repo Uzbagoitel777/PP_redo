@@ -66,10 +66,13 @@
 }
 
 .offer-image {
-    width: 80px;
+    /* width: 80px;
     height: 80px;
     object-fit: cover;
-    border-radius: 5px;
+    border-radius: 5px; */
+    max-width: 100px;
+    max-height: 100px;
+    object-fit: contain;
 }
 
 #offers-container {
