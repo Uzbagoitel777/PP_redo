@@ -123,18 +123,25 @@ app.post('/api/submit-application', (req, res) => {
       INSERT INTO applications (studentID, offerID, topic, applicationText)
       VALUES (?, ?, ?, ?)
   `;
-
+  const updateQuery = `
+      UPDATE offers SET applied = 1 WHERE ID = ?
+  `
   db.run(query, [userId, offerId, topic, applicationText], function(err) {
       if (err) {
           console.error(err);
           return res.status(500).json({ success: false, error: 'Database error' });
       }
+      db.run(updateQuery, [offerId], function(err) {
+        if (err) {
+          console.error(err);
+          return res.status(500).json({ success: false, error: 'Database error' });
+        }
+      })
       res.json({ success: true, message: 'Application submitted successfully' });
   });
 });
 
 app.get('/api/offers', (req, res) => {
-  //const query = "SELECT * FROM offers";
   const query = `SELECT offers.*, media.path FROM offermedia 
   INNER JOIN offers ON offers.ID = offermedia.offerID 
   INNER JOIN media ON media.mediaID = offermedia.mediaID;`
@@ -149,7 +156,6 @@ app.get('/api/offers', (req, res) => {
 
 app.get('/api/offers/:id', (req, res) => {
   const id = req.params.id;
-  //const query = "SELECT * FROM offers WHERE id = ?";
   const query = `SELECT offers.*, media.path FROM offermedia 
   INNER JOIN offers ON offers.ID = offermedia.offerID 
   INNER JOIN media ON media.mediaID = offermedia.mediaID

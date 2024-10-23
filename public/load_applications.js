@@ -36,10 +36,11 @@ async function fetchApplications(id) {
 
 function renderApplications(applications, offers) {
     const container = document.getElementById('applications-container');
+    const statuses = [" applied", " accepted", " denied"]
     for (let i = 0; i < applications.length; i++) {
         let applicationElement = document.createElement('div');
         //offer card elements' css reused
-        applicationElement.className = 'offer-card';
+        applicationElement.className = `offer-card${statuses[applications[i].status]}`;
         applicationElement.innerHTML = `
             <div class="offer-text">
                 <div class="offer-title">${offers[i].title}</div>
