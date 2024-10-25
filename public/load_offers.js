@@ -22,7 +22,7 @@ function renderOffers(offers) {
     const container = document.getElementById('offers-container');
     offers.forEach(offer => {
         const offerElement = document.createElement('div');
-        offerElement.className = `offer-card${offer.applied?" applied":""}`;
+        offerElement.className = `offer-card`;
         offerElement.innerHTML = `
             <div class="offer-text">
                 <div class="offer-title">${offer.title}</div>
